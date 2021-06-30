@@ -225,7 +225,7 @@ int main()
 		printf("--%s--\n", line);
 	printf("--%s--\n", line);	
 
-	/*File Tests
+	/*File Tests*/
 	printf("run test 1\n\n");
 	fd = open("tests/test0.txt", O_RDONLY);
 	while (get_next_line(fd, &line) > 0)
@@ -256,7 +256,8 @@ int main()
 		printf("--%s--\n", line);
 	printf("--%s--\n", line);
 
-	*/
+	
+	/*
 	printf("run test 6\n\n");
 	fd = open("tests/test6.txt", O_RDONLY);
 	while (get_next_line(fd, &line) > 0)

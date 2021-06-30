@@ -6,11 +6,23 @@
 /*   By: cchekov <cchekov@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/26 23:08:23 by cchekov           #+#    #+#             */
-/*   Updated: 2021/06/30 06:18:51 by cchekov          ###   ########.fr       */
+/*   Updated: 2021/06/30 23:08:21 by cchekov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+void clean(char *target)
+{
+	size_t i;
+	i = 0;
+	while (target[i])
+	{
+		target[i] = '\0';
+		i++;
+	}
+	free(target);
+}
 
 char	*work_with_iter(char **line, char **strorage_iter, short int *status)
 {
@@ -24,18 +36,20 @@ char	*work_with_iter(char **line, char **strorage_iter, short int *status)
 	find = ft_strchr(iter, '\n');
 	if (!find)
 	{
+		clean(*line);
 		*line = ft_strdup(iter, 0);
-		free(iter);
+		//free(iter);
 	}
 	else
 	{
 		count = find - iter;
+		clean(*line);
 		*line = ft_substr(iter, 0, count);
 		ft_strlcpy(iter, iter + count + 1);
 	}
-	if (!line)
+	if (!(*line))
 	{
-		free(iter);
+		clean(iter);
 		*status = -1;
 	}
 	return (find);
@@ -56,7 +70,7 @@ short int	work_with_file(int fd, char **line, char **iter)
 			temp = *line;
 			buffer[find - buffer] = '\0';
 			*line = ft_strjoin(*line, buffer);
-			free(temp);
+			clean(temp);
 			*iter = ft_strdup(find + 1, count - (find - buffer) - 1);
 			if (!*line || !*iter)
 				return(-2);
@@ -64,7 +78,7 @@ short int	work_with_file(int fd, char **line, char **iter)
 		}
 		temp = *line;
 		*line = ft_strjoin(*line, buffer);
-		free(temp);
+		clean(temp);
 	}
 	return (count);
 }
@@ -76,8 +90,8 @@ int	get_next_line(int fd, char **line)
 	short int			status;
 
 	
-	*line = '\0';
-	//*line = ft_strdup("\0",1);
+	//*line = "\0";
+	*line = ft_strdup("\0",1);
 	if (iter)
 	{
 		find = work_with_iter(line, &iter, &status);
@@ -85,8 +99,8 @@ int	get_next_line(int fd, char **line)
 			return (status);
 		if (find)
 			return (1);
-		//else
-		//	free(iter);
+		else
+			clean(iter);
 	}
 	status = work_with_file(fd, line, &iter);
 	if (status == 0 && iter && *iter)
@@ -94,7 +108,7 @@ int	get_next_line(int fd, char **line)
 	if (status == 0)
 		iter = NULL;
 	if (status == -1)
-		free(*line);
+		clean(*line);
 	if (status < 0)
 		return(-1);
     return (status);

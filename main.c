@@ -6,7 +6,7 @@
 /*   By: cchekov <cchekov@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/26 23:20:17 by cchekov           #+#    #+#             */
-/*   Updated: 2021/06/30 14:48:36 by cchekov          ###   ########.fr       */
+/*   Updated: 2021/06/30 23:09:23 by cchekov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 
 int main()
 {
-   // int fd;
+    //int fd;
     char *line;
     
     //line = ft_strdup("1234",2);
@@ -30,9 +30,8 @@ int main()
     while (get_next_line(0, &line) > 0)
     {
         printf("%s\n", line); 
-        free(line)  ;    
-    }
-        
+        free(line);
+    } 
     printf("%s\n",line);
-    free(line)  ; 
+    //free(line)  ; 
 }
