@@ -4,11 +4,12 @@ FILES = $(FOLDER)get_next_line.h $(FOLDER)get_next_line.c $(FOLDER)get_next_line
 TEST = main.c
 LIB = libft/libft.a
 FLAGS = -Wall -Wextra -Werror
+BUFFER = -D BUFFER_SIZE=2
 CC = gcc
 
 
 run : $(NAME)
-	./a.out
+	./a.out 
 
 debug : $(NAME)
 	gdb ./a.out

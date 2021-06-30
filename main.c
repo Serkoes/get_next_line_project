@@ -6,7 +6,7 @@
 /*   By: cchekov <cchekov@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/26 23:20:17 by cchekov           #+#    #+#             */
-/*   Updated: 2021/06/30 23:09:23 by cchekov          ###   ########.fr       */
+/*   Updated: 2021/07/01 00:38:23 by cchekov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,35 @@
 
 int main()
 {
-    //int fd;
+    int fd;
     char *line;
     
     //line = ft_strdup("1234",2);
     //printf("%s\n", line);
-    //fd = open("tests/test7.txt", O_RDONLY);
     
-    while (get_next_line(0, &line) > 0)
+   /* fd = open("tests/alphabet.txt", O_RDONLY);
+    printf("%d\n",BUFFER_SIZE);
+    while (get_next_line(fd, &line) > 0)
     {
         printf("%s\n", line); 
         free(line);
     } 
-    printf("%s\n",line);
+    printf("%s\n",line);*/
+    /*printf("%d\n",BUFFER_SIZE);
+    fd = open("tests/half_marge_top", O_RDONLY);
+    while (get_next_line(fd, &line) > 0)
+	{
+		printf("%s\n", line);
+		free(line);
+	}
+	free(line);*/
+    fd = open("tests/half_marge_bottom", O_RDONLY);
+    while (get_next_line(fd, &line) > 0)
+	{
+		printf("%s\n", line);
+		free(line);
+	}
+    printf("%s\n", line);
+	//free(line);
     //free(line)  ; 
 }

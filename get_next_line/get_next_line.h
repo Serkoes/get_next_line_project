@@ -6,14 +6,14 @@
 /*   By: cchekov <cchekov@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/26 23:11:00 by cchekov           #+#    #+#             */
-/*   Updated: 2021/06/13 14:36:11 by cchekov          ###   ########.fr       */
+/*   Updated: 2021/07/01 00:26:12 by cchekov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 30
+#  define BUFFER_SIZE 2
 # endif
 # include <unistd.h>
 # include <stdlib.h>
