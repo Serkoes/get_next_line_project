@@ -6,7 +6,7 @@
 /*   By: cchekov <cchekov@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/27 00:19:08 by cchekov           #+#    #+#             */
-/*   Updated: 2021/06/30 05:47:29 by cchekov          ###   ########.fr       */
+/*   Updated: 2021/07/04 16:03:48 by cchekov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,10 @@ char	*ft_strdup(char *src, size_t len)
 		len = ft_strlen(src);
 	dest = (char *)malloc(len + 1);
 	if (!dest)
+	{
+		printf("123");
 		return (NULL);
+	}
 	i = 0;
 	while (i < len)
 	{

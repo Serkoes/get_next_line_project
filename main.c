@@ -6,7 +6,7 @@
 /*   By: cchekov <cchekov@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/26 23:20:17 by cchekov           #+#    #+#             */
-/*   Updated: 2021/07/01 00:38:23 by cchekov          ###   ########.fr       */
+/*   Updated: 2021/07/04 19:47:08 by cchekov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int main()
 		printf("%s\n", line);
 		free(line);
 	}
-    printf("%s\n", line);
-	//free(line);
+    printf("%s", line);
+	free(line);
     //free(line)  ; 
 }

@@ -6,7 +6,7 @@
 /*   By: cchekov <cchekov@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/26 23:11:00 by cchekov           #+#    #+#             */
-/*   Updated: 2021/07/01 00:26:12 by cchekov          ###   ########.fr       */
+/*   Updated: 2021/07/04 16:33:04 by cchekov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # endif
 # include <unistd.h>
 # include <stdlib.h>
-# include "stdio.h"
+# include <stdio.h>
 # include <fcntl.h>
 
 int	    	get_next_line(int fd, char **line);

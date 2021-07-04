@@ -6,7 +6,7 @@
 /*   By: cchekov <cchekov@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/26 23:08:23 by cchekov           #+#    #+#             */
-/*   Updated: 2021/06/30 23:08:21 by cchekov          ###   ########.fr       */
+/*   Updated: 2021/07/04 19:54:50 by cchekov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,16 @@
 void clean(char *target)
 {
 	size_t i;
+	char	**obj;
+
+	obj = &target;
 	i = 0;
 	while (target[i])
 	{
 		target[i] = '\0';
 		i++;
 	}
+	*obj = NULL; 
 	free(target);
 }
 
@@ -38,7 +42,6 @@ char	*work_with_iter(char **line, char **strorage_iter, short int *status)
 	{
 		clean(*line);
 		*line = ft_strdup(iter, 0);
-		//free(iter);
 	}
 	else
 	{
@@ -102,13 +105,17 @@ int	get_next_line(int fd, char **line)
 		else
 			clean(iter);
 	}
+	
 	status = work_with_file(fd, line, &iter);
 	if (status == 0 && iter && *iter)
 		return (1);
 	if (status == 0)
 		iter = NULL;
-	if (status == -1)
+	/*if (status == -1)
+	{
+		//printf("dsada");
 		clean(*line);
+	}*/
 	if (status < 0)
 		return(-1);
     return (status);
