@@ -1,4 +1,4 @@
-NAME = programm
+NAME = a.out
 FOLDER = get_next_line/
 FILES = $(FOLDER)get_next_line.h $(FOLDER)get_next_line.c $(FOLDER)get_next_line_utils.c
 TEST = main.c
@@ -10,6 +10,9 @@ CC = gcc
 
 run : $(NAME)
 	./a.out 
+re : 
+	$(CC)  $(FLAGS) $(FILES)  $(TEST) $(LIB)
+	./a.out	
 
 debug : $(NAME)
 	gdb ./a.out

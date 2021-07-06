@@ -17,15 +17,20 @@ void clean(char *target)
 	size_t i;
 	char	**obj;
 
+
 	obj = &target;
 	i = 0;
+	//printf("TEST CLEAN\n");
+	//printf("target = %p | obj = %p \n", target, obj);
 	while (target[i])
 	{
 		target[i] = '\0';
 		i++;
 	}
-	*obj = NULL; 
+	//printf("target = %p | obj = %p \n", target, obj);
 	free(target);
+	*obj = NULL;
+	//printf("target = %p | obj = %p \n", target, obj);
 }
 
 char	*work_with_iter(char **line, char **strorage_iter, short int *status)
@@ -40,18 +45,23 @@ char	*work_with_iter(char **line, char **strorage_iter, short int *status)
 	find = ft_strchr(iter, '\n');
 	if (!find)
 	{
+		//printf("free line  | LINE - %p\n", *line);
 		clean(*line);
 		*line = ft_strdup(iter, 0);
+		//printf("alloc line| LINE - %p\n", *line);
 	}
 	else
 	{
 		count = find - iter;
+		//printf("free line\n");
 		clean(*line);
+		//printf("alloc line\n");
 		*line = ft_substr(iter, 0, count);
 		ft_strlcpy(iter, iter + count + 1);
 	}
 	if (!(*line))
 	{
+		printf("free iter\n");
 		clean(iter);
 		*status = -1;
 	}
@@ -73,14 +83,21 @@ short int	work_with_file(int fd, char **line, char **iter)
 			temp = *line;
 			buffer[find - buffer] = '\0';
 			*line = ft_strjoin(*line, buffer);
+			//printf("alloc line in WWF \\n | LINE - %p\n", *line);
+
+			//printf("free line in WWF \\n | LINE - %p\n", temp);
 			clean(temp);
+			
 			*iter = ft_strdup(find + 1, count - (find - buffer) - 1);
+			//printf("alloc iter in WWF \\n | ITER - %p\n", *iter);
 			if (!*line || !*iter)
 				return(-2);
 			return (1);
 		}
 		temp = *line;
 		*line = ft_strjoin(*line, buffer);
+		//printf("alloc line in WWF | LINE - %p\n", *line);
+		//printf("free line in WWF | LINE - %p\n", temp);
 		clean(temp);
 	}
 	return (count);
@@ -95,6 +112,7 @@ int	get_next_line(int fd, char **line)
 	
 	//*line = "\0";
 	*line = ft_strdup("\0",1);
+	//printf("alloc line in GNL FIRST | LINE - %p \n", *line);
 	if (iter)
 	{
 		find = work_with_iter(line, &iter, &status);
@@ -103,19 +121,22 @@ int	get_next_line(int fd, char **line)
 		if (find)
 			return (1);
 		else
-			clean(iter);
+		{
+			//clean(iter);
+			//printf("free iter in GNL 120  | ITER - %p \n", iter);
+					
+		}
 	}
 	
 	status = work_with_file(fd, line, &iter);
 	if (status == 0 && iter && *iter)
 		return (1);
 	if (status == 0)
-		iter = NULL;
-	/*if (status == -1)
 	{
-		//printf("dsada");
-		clean(*line);
-	}*/
+		//printf("null iter in 128");
+		iter = NULL;
+	}
+
 	if (status < 0)
 		return(-1);
     return (status);

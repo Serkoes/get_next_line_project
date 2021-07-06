@@ -117,7 +117,6 @@ char	*ft_strdup(char *src, size_t len)
 	dest = (char *)malloc(len + 1);
 	if (!dest)
 	{
-		printf("123");
 		return (NULL);
 	}
 	i = 0;
