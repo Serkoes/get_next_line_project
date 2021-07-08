@@ -11,12 +11,12 @@ CC = gcc
 run : $(NAME)
 	./a.out 
 re : 
-	$(CC)  $(FLAGS) $(FILES)  $(TEST) $(LIB)
+	$(CC) $(BUFFER)  $(FLAGS) $(FILES)  $(TEST) $(LIB)
 	./a.out	
 
 debug : $(NAME)
 	gdb ./a.out
 
 $(NAME) : $(FILES) $(TEST)
-	$(CC)  $(FLAGS) $(FILES)  $(TEST) $(LIB)
+	$(CC) $(BUFFER)  $(FLAGS) $(FILES)  $(TEST) $(LIB)
 	

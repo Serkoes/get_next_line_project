@@ -1,28 +1,16 @@
 #include <stdlib.h>
-
-char *test()
-{
-    char *q;
-    q = (char *)malloc(1);
-    return q;
-}
-
-void test2(char *q)
-{
-    
-    free(q);
-
-}
-
+#include <stdio.h>
+#include <fcntl.h>
+# include <unistd.h>
 
 int main()
 {
-    char *q;
+    int i;
     char *temp;
 
-    q = (char *)malloc(1);
-    temp = q;
-    q = (char *)malloc(1);
-    free(temp);
-    free(q);
+    temp = "123";
+    printf("%s\n",temp);
+    i = read(1, temp, 0);
+    printf("%s\n",temp);
+    printf("%d\n",i);
 }

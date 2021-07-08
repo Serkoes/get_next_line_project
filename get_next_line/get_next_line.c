@@ -12,24 +12,23 @@
 
 #include "get_next_line.h"
 
-void clean(char *target)
+void clean(char **target)
 {
-	size_t i;
-	char	**obj;
+	size_t 	i;
+	char 	*obj;
 
-
-	obj = &target;
 	i = 0;
 	//printf("TEST CLEAN\n");
 	//printf("target = %p | obj = %p \n", target, obj);
-	while (target[i])
+	obj = *target;
+	while (obj[i])
 	{
-		target[i] = '\0';
+		obj[i] = '\0';
 		i++;
 	}
 	//printf("target = %p | obj = %p \n", target, obj);
-	free(target);
-	*obj = NULL;
+	free(*target);
+	*target = NULL;
 	//printf("target = %p | obj = %p \n", target, obj);
 }
 
@@ -46,7 +45,7 @@ char	*work_with_iter(char **line, char **strorage_iter, short int *status)
 	if (!find)
 	{
 		//printf("free line  | LINE - %p\n", *line);
-		clean(*line);
+		clean(line);
 		*line = ft_strdup(iter, 0);
 		//printf("alloc line| LINE - %p\n", *line);
 	}
@@ -54,7 +53,7 @@ char	*work_with_iter(char **line, char **strorage_iter, short int *status)
 	{
 		count = find - iter;
 		//printf("free line\n");
-		clean(*line);
+		clean(line);
 		//printf("alloc line\n");
 		*line = ft_substr(iter, 0, count);
 		ft_strlcpy(iter, iter + count + 1);
@@ -62,7 +61,7 @@ char	*work_with_iter(char **line, char **strorage_iter, short int *status)
 	if (!(*line))
 	{
 		printf("free iter\n");
-		clean(iter);
+		clean(strorage_iter);
 		*status = -1;
 	}
 	return (find);
@@ -86,7 +85,7 @@ short int	work_with_file(int fd, char **line, char **iter)
 			//printf("alloc line in WWF \\n | LINE - %p\n", *line);
 
 			//printf("free line in WWF \\n | LINE - %p\n", temp);
-			clean(temp);
+			clean(&temp);
 			
 			*iter = ft_strdup(find + 1, count - (find - buffer) - 1);
 			//printf("alloc iter in WWF \\n | ITER - %p\n", *iter);
@@ -98,7 +97,7 @@ short int	work_with_file(int fd, char **line, char **iter)
 		*line = ft_strjoin(*line, buffer);
 		//printf("alloc line in WWF | LINE - %p\n", *line);
 		//printf("free line in WWF | LINE - %p\n", temp);
-		clean(temp);
+		clean(&temp);
 	}
 	return (count);
 }
@@ -109,9 +108,11 @@ int	get_next_line(int fd, char **line)
 	static char			*iter = NULL;
 	short int			status;
 
-	
+	if ((read(fd, *line, 0)) != 0)
+		return (-1);
 	//*line = "\0";
 	*line = ft_strdup("\0",1);
+
 	//printf("alloc line in GNL FIRST | LINE - %p \n", *line);
 	if (iter)
 	{
@@ -121,8 +122,9 @@ int	get_next_line(int fd, char **line)
 		if (find)
 			return (1);
 		else
-		{
-			//clean(iter);
+		{	
+			//if (*iter)
+			clean(&iter);
 			//printf("free iter in GNL 120  | ITER - %p \n", iter);
 					
 		}

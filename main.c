@@ -21,6 +21,7 @@
 void test(char  *name)
 {
     int fd;
+    int result;
     char *line;
     char *file;
 
@@ -29,13 +30,15 @@ void test(char  *name)
     file = ft_strjoin("tests/", name);
     fd = open(file, O_RDONLY);
     //printf("%d\n",BUFFER_SIZE);            
-    while (get_next_line(fd, &line) > 0)   
+    while ((result = get_next_line(fd, &line)) > 0)   
     {                                      
-        printf("%s\n", line); 
+        printf("%d\n%s\n", result, line);
+        printf("SYMBOL - %d\n", *line);
         //printf("free line in main\n");             
         free(line);                       
     }                                      
-    printf("%s\n",line);  
+    printf("%d\n%s\n", result, line);
+    printf("SYMBOL - %d\n", *line);
     //printf("free line in end\n");                  
     free(line); 
     free(file);
@@ -43,14 +46,25 @@ void test(char  *name)
 
 int main()
 {
-    //test("test1.txt");
-    //test("test2.txt");
-    //test("test3.txt");
-    //test("test4.txt");
-    //test("test5.txt");
-    //test("test6.txt");
-    test("test7.txt");
-    test("alphabet.txt");
-    //test("half_marge_top");
-    //test("half_marge_bottom");
+    // test("test1.txt");
+    // test("test2.txt");
+    // test("test3.txt");
+    // test("test4.txt");
+    // test("test5.txt");
+    // test("test6.txt");
+    // test("test7.txt");
+    // test("alphabet.txt");
+    // test("half_marge_top");
+    // test("half_marge_bottom");
+    // test("empty");
+    test("nl");
 }
+
+/*
+files/empty: 1.OK 1.MKO 2.OK 2.MKO 
+files/nl: 1.KO 1.MKO 2.OK 2.MOK 
+files/41_no_nl: 1.OK 1.MOK 2.OK 2.MKO 
+files/41_with_nl: 1.KO 1.MKO 2.OK 2.MOK 
+files/42_no_nl: 1.OK 1.MOK 
+files/42_with_nl: 1.KO 1.MKO 2.OK 2.MOK 3.OK 3.MKO
+*/
