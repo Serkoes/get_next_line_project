@@ -4,7 +4,7 @@ FILES = $(FOLDER)get_next_line.h $(FOLDER)get_next_line.c $(FOLDER)get_next_line
 TEST = main.c
 LIB = libft/libft.a
 FLAGS = -g -Wall -Wextra -Werror
-BUFFER = -D BUFFER_SIZE=2
+BUFFER = -D BUFFER_SIZE=3
 CC = gcc
 
 

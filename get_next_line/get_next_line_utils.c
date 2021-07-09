@@ -6,7 +6,7 @@
 /*   By: cchekov <cchekov@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/27 00:19:08 by cchekov           #+#    #+#             */
-/*   Updated: 2021/07/04 16:03:48 by cchekov          ###   ########.fr       */
+/*   Updated: 2021/07/09 21:25:54 by cchekov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@ size_t ft_strlen(const char *s)
 
 char	*ft_strchr(const char *src, int c)
 {
-	if (c == '\0')
-		return ((char *)(src + ft_strlen(src)));
 	while (*src != '\0')
 	{
 		if (*src == c)
@@ -41,36 +39,19 @@ char	*ft_strjoin(char const *s1, char const *s2)
 {
 	char	*boof;
 	int		i;
-	size_t	s1_len;
-	size_t	s2_len;
+	int		j;
+	
 
-	if (!s1 && !s2)
-		return (NULL);
-	s1_len = ft_strlen(s1);
-	s2_len = ft_strlen(s2);
-	boof = (char *)malloc((s1_len + s2_len + 1) * sizeof(char));
+	boof = (char *)malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
 	if (!boof)
 		return (NULL);
-
 	i = 0;
-	if (s1_len)
-	{
-		while (*s1)
-		{
-			boof[i] = *s1;
-			i++;
-			s1++;
-		}
-	}
-	if (s2_len)
-	{
-		while (*s2)
-		{
-			boof[i] = *s2;
-			i++;
-			s2++;
-		}
-	}
+	j = 0;
+	while (s1 && s1[j])
+		boof[i++] = s1[j++];
+	j = 0;
+	while (s2 && s2[j])
+		boof[i++] = s2[j++];
 	boof[i] = '\0';
 	return (boof);
 }
@@ -105,26 +86,4 @@ char	*ft_substr(char *s, unsigned int start, size_t len)
 	}
 	result[i] = '\0';
 	return (result);
-}
-
-char	*ft_strdup(char *src, size_t len)
-{
-	char	*dest;
-	size_t	i;
-
-	if (!len)
-		len = ft_strlen(src);
-	dest = (char *)malloc(len + 1);
-	if (!dest)
-	{
-		return (NULL);
-	}
-	i = 0;
-	while (i < len)
-	{
-		dest[i] = src[i];
-		i++;
-	}
-	dest[i] = '\0';
-	return (dest);
 }

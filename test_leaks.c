@@ -3,14 +3,17 @@
 #include <fcntl.h>
 # include <unistd.h>
 
+int getter()
+{
+    return (4);
+}
+
 int main()
 {
-    int i;
-    char *temp;
+    int a=1;
 
-    temp = "123";
-    printf("%s\n",temp);
-    i = read(1, temp, 0);
-    printf("%s\n",temp);
-    printf("%d\n",i);
+    while ((a = getter()) > 0)
+    {
+       a++;
+    }  
 }

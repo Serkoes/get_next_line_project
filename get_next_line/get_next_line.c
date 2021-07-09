@@ -6,140 +6,105 @@
 /*   By: cchekov <cchekov@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/26 23:08:23 by cchekov           #+#    #+#             */
-/*   Updated: 2021/07/04 19:54:50 by cchekov          ###   ########.fr       */
+/*   Updated: 2021/07/09 22:54:52 by cchekov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-void clean(char **target)
+void clean(char *target)
 {
 	size_t 	i;
-	char 	*obj;
 
+	if (!target || !(*target))
+		return ;
 	i = 0;
-	//printf("TEST CLEAN\n");
-	//printf("target = %p | obj = %p \n", target, obj);
-	obj = *target;
-	while (obj[i])
-	{
-		obj[i] = '\0';
-		i++;
-	}
-	//printf("target = %p | obj = %p \n", target, obj);
-	free(*target);
-	*target = NULL;
-	//printf("target = %p | obj = %p \n", target, obj);
+	while (target[i])
+		target[i++] = '\0';
+	free(target);
 }
 
-char	*work_with_iter(char **line, char **strorage_iter, short int *status)
+char	*work_with_iter(char **line, char *iter)
 {
 	char				*find;
-	char				*iter;
 	unsigned int		count;
 
-	iter = *strorage_iter;
-	find = NULL;
-	*status = 1;
 	find = ft_strchr(iter, '\n');
 	if (!find)
 	{
-		//printf("free line  | LINE - %p\n", *line);
-		clean(line);
-		*line = ft_strdup(iter, 0);
-		//printf("alloc line| LINE - %p\n", *line);
+		*line = ft_strjoin(iter, "\0");
+		clean(iter);
 	}
 	else
 	{
 		count = find - iter;
-		//printf("free line\n");
-		clean(line);
-		//printf("alloc line\n");
 		*line = ft_substr(iter, 0, count);
 		ft_strlcpy(iter, iter + count + 1);
 	}
-	if (!(*line))
-	{
-		printf("free iter\n");
-		clean(strorage_iter);
-		*status = -1;
-	}
-	return (find);
+	return (iter);
 }
 
-short int	work_with_file(int fd, char **line, char **iter)
+char	*work_with_file(int fd, char *line, char **iter)
 {
 	int			count;
 	char		buffer[BUFFER_SIZE+1];
 	char		*find;
 	char		*temp;
 
-	while ((count = read(fd, &buffer, BUFFER_SIZE)) > 0)
+	count = read(fd, &buffer, BUFFER_SIZE);
+	while (count)
 	{
 		buffer[count] = '\0';
-		if ((find = ft_strchr(buffer, '\n')))
-		{
-			temp = *line;
+		find = ft_strchr(buffer, '\n');
+		if (find)
+		{  
 			buffer[find - buffer] = '\0';
-			*line = ft_strjoin(*line, buffer);
-			//printf("alloc line in WWF \\n | LINE - %p\n", *line);
-
-			//printf("free line in WWF \\n | LINE - %p\n", temp);
-			clean(&temp);
-			
-			*iter = ft_strdup(find + 1, count - (find - buffer) - 1);
-			//printf("alloc iter in WWF \\n | ITER - %p\n", *iter);
-			if (!*line || !*iter)
-				return(-2);
-			return (1);
+			if (line)
+			{
+				temp = ft_strjoin(line, buffer);
+				clean(line);
+				line = temp;
+			}
+			else
+				line = ft_strjoin(line, buffer);
+			//buffer[find - buffer] = '\0';
+			*iter = ft_strjoin(find + 1, "\0");
+			if (!(*iter))
+			{
+				clean(line);
+				line = NULL;
+			}
+			return (line);
 		}
-		temp = *line;
-		*line = ft_strjoin(*line, buffer);
-		//printf("alloc line in WWF | LINE - %p\n", *line);
-		//printf("free line in WWF | LINE - %p\n", temp);
-		clean(&temp);
+		temp = ft_strjoin(line, buffer);
+		if (line)
+			clean(line);
+		line = temp;
+		count = read(fd, &buffer, BUFFER_SIZE);
 	}
-	return (count);
+	return (line);
 }
 
-int	get_next_line(int fd, char **line)
+char	*get_next_line(int fd)
 {
-	char				*find;
 	static char			*iter = NULL;
-	short int			status;
+	char				*line;
+	char				*result;
 
-	if ((read(fd, *line, 0)) != 0)
-		return (-1);
-	//*line = "\0";
-	*line = ft_strdup("\0",1);
-
-	//printf("alloc line in GNL FIRST | LINE - %p \n", *line);
-	if (iter)
+	line = NULL;
+	result = NULL;
+	if ((read(fd, line, 0)) != 0)
+		return (line);
+	if (iter && *iter)
 	{
-		find = work_with_iter(line, &iter, &status);
-		if (status < 0)
-			return (status);
-		if (find)
-			return (1);
-		else
-		{	
-			//if (*iter)
-			clean(&iter);
-			//printf("free iter in GNL 120  | ITER - %p \n", iter);
-					
-		}
+		iter = work_with_iter(&line, iter);
+		if (!line || !(*iter))
+			return line;
 	}
-	
-	status = work_with_file(fd, line, &iter);
-	if (status == 0 && iter && *iter)
-		return (1);
-	if (status == 0)
-	{
-		//printf("null iter in 128");
-		iter = NULL;
-	}
-
-	if (status < 0)
-		return(-1);
-    return (status);
+	line = work_with_file(fd, line, &iter);
+	if (line)
+		result = ft_strjoin(line,"\n");
+		free(line);
+		return (result);
+	return (line);
 }
