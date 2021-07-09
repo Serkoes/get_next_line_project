@@ -6,7 +6,7 @@
 /*   By: cchekov <cchekov@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/26 23:20:17 by cchekov           #+#    #+#             */
-/*   Updated: 2021/07/09 22:55:51 by cchekov          ###   ########.fr       */
+/*   Updated: 2021/07/09 23:08:59 by cchekov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int main()
 {
     // test("test1.txt");
     // test("qq");
-    // test("test2.txt"); 
+    //test("test2.txt"); 
     // test("test3.txt"); 
     // test("test4.txt");
     // test("test5.txt");
@@ -64,12 +64,12 @@ int main()
     // test("test7.txt");
     // test("alphabet.txt");
     // test("half_marge_top");
-    test("half_marge_bottom");
-    test("empty");
+    //test("half_marge_bottom");
+    //test("empty");
     //test("nl");
     //test_input();
+    test("marge_test");
 }
-
 /*
 files/empty: 1.OK 1.MKO 2.OK 2.MKO 
 files/nl: 1.KO 1.MKO 2.OK 2.MOK 

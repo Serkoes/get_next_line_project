@@ -6,7 +6,7 @@
 /*   By: cchekov <cchekov@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/26 23:08:23 by cchekov           #+#    #+#             */
-/*   Updated: 2021/07/09 22:54:52 by cchekov          ###   ########.fr       */
+/*   Updated: 2021/07/09 23:09:27 by cchekov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ char	*work_with_file(int fd, char *line, char **iter)
 			else
 				line = ft_strjoin(line, buffer);
 			//buffer[find - buffer] = '\0';
+			//leak на этом iter
 			*iter = ft_strjoin(find + 1, "\0");
 			if (!(*iter))
 			{
