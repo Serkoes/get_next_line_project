@@ -54,19 +54,19 @@ void test(char  *name)
 
 int main()
 {
-    // test("test1.txt");
-    // test("qq");
-    //test("test2.txt"); 
-    // test("test3.txt"); 
-    // test("test4.txt");
-    // test("test5.txt");
-    // test("test6.txt");
-    // test("test7.txt");
-    // test("alphabet.txt");
-    // test("half_marge_top");
-    //test("half_marge_bottom");
-    //test("empty");
-    //test("nl");
+    test("test1.txt");
+    test("qq");
+    test("test2.txt"); 
+    test("test3.txt"); 
+    test("test4.txt");
+    test("test5.txt");
+    test("test6.txt");
+    test("test7.txt");
+    test("alphabet.txt");
+    test("half_marge_top");
+    test("half_marge_bottom");
+    test("empty");
+    test("nl");
     //test_input();
     test("marge_test");
 }

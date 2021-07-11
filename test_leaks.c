@@ -3,17 +3,16 @@
 #include <fcntl.h>
 # include <unistd.h>
 
-int getter()
+int test(char **t)
 {
-    return (4);
+    *t = NULL;
+    return (0);
 }
 
 int main()
 {
-    int a=1;
-
-    while ((a = getter()) > 0)
-    {
-       a++;
-    }  
+    char    *line;
+    ;
+    test(&line);
+    printf("dsada");
 }

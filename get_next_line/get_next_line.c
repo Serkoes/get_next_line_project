@@ -12,16 +12,10 @@
 
 #include "get_next_line.h"
 
-void clean(char *target)
+void clean(char **target)
 {
-	size_t 	i;
-
-	if (!target || !(*target))
-		return ;
-	i = 0;
-	while (target[i])
-		target[i++] = '\0';
-	free(target);
+	free(*target);
+	*target = NULL;
 }
 
 char	*work_with_iter(char **line, char *iter)
@@ -33,7 +27,7 @@ char	*work_with_iter(char **line, char *iter)
 	if (!find)
 	{
 		*line = ft_strjoin(iter, "\0");
-		clean(iter);
+		clean(&iter);
 	}
 	else
 	{
@@ -62,7 +56,7 @@ char	*work_with_file(int fd, char *line, char **iter)
 			if (line)
 			{
 				temp = ft_strjoin(line, buffer);
-				clean(line);
+				clean(&line);
 				line = temp;
 			}
 			else
@@ -72,14 +66,14 @@ char	*work_with_file(int fd, char *line, char **iter)
 			*iter = ft_strjoin(find + 1, "\0");
 			if (!(*iter))
 			{
-				clean(line);
+				clean(&line);
 				line = NULL;
 			}
 			return (line);
 		}
 		temp = ft_strjoin(line, buffer);
 		if (line)
-			clean(line);
+			clean(&line);
 		line = temp;
 		count = read(fd, &buffer, BUFFER_SIZE);
 	}
@@ -99,13 +93,15 @@ char	*get_next_line(int fd)
 	if (iter && *iter)
 	{
 		iter = work_with_iter(&line, iter);
-		if (!line || !(*iter))
+		if (!line || !iter)
 			return line;
 	}
 	line = work_with_file(fd, line, &iter);
 	if (line)
+	{
 		result = ft_strjoin(line,"\n");
 		free(line);
 		return (result);
+	}
 	return (line);
 }
